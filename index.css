@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  BASHQALOOB Design Tokens — Strict 60 / 30 / 10 Ratio
+  - Default (.dark = Espresso Mode):
+      60% Espresso Background: #1A0F0C
+      30% Cream Surface/Text: #F5E6D3
+      10% Amber Accent: #D4893A
+      Order Buttons: Deep Maroon #3A1219 with Cream #F5E6D3 text & Amber hover glow
+  - Inverted (:root light = Cream Mode):
+      60% Cream Background: #F5E6D3
+      30% Espresso Surface/Text: #1A0F0C
+      10% Amber Accent: #D4893A
+      Order Buttons: Deep Maroon #3A1219
+*/
+
+:root {
+  --bg-dominant: #F5E6D3;
+  --bg-dominant-elevated: #EAD4BA;
+  --surface-secondary: #1A0F0C;
+  --surface-secondary-soft: #261713;
+  --text-primary: #1A0F0C;
+  --text-muted: #4A3229;
+  --text-on-secondary: #F5E6D3;
+  --text-on-secondary-muted: #DECAB2;
+  --accent: #D4893A;
+  --accent-text: #8A4B12;
+  --accent-on-secondary: #D4893A;
+  --accent-ink: #1A0F0C;
+  --btn-bg: #3A1219;
+  --btn-text: #F5E6D3;
+  --border-subtle: rgba(26, 15, 12, 0.16);
+  --border-on-secondary: rgba(245, 230, 211, 0.18);
+  --shadow-card: 0 18px 42px -18px rgba(26, 15, 12, 0.28);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-arabic: 'Cairo', system-ui, -apple-system, sans-serif;
+}
+
+html.dark {
+  --bg-dominant: #1A0F0C;
+  --bg-dominant-elevated: #241511;
+  --surface-secondary: #F5E6D3;
+  --surface-secondary-soft: #EAD6BC;
+  --text-primary: #F5E6D3;
+  --text-muted: #D8C3AA;
+  --text-on-secondary: #1A0F0C;
+  --text-on-secondary-muted: #4E342A;
+  --accent: #D4893A;
+  --accent-text: #D4893A;
+  --accent-on-secondary: #8A4B12;
+  --accent-ink: #1A0F0C;
+  --btn-bg: #3A1219;
+  --btn-text: #F5E6D3;
+  --border-subtle: rgba(245, 230, 211, 0.16);
+  --border-on-secondary: rgba(26, 15, 12, 0.16);
+  --shadow-card: 0 22px 48px -18px rgba(8, 3, 2, 0.72);
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-dominant);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html[lang="ar"] {
+    font-family: var(--font-arabic);
+  }
+
+  html[lang="ar"] .font-display {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+  }
+
+  body {
+    overflow-x: hidden;
+    background-color: var(--bg-dominant);
+    color: var(--text-primary);
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Deep maroon placeholder Order button with glowing amber hover effect */
+.order-glow-btn {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid rgba(212, 137, 58, 0.45);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms ease,
+    background-color 200ms ease;
+  box-shadow: 0 6px 20px -6px rgba(212, 137, 58, 0.35);
+}
+
+.order-glow-btn:hover,
+.order-glow-btn:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(212, 137, 58, 0.35),
+    0 12px 30px -4px rgba(212, 137, 58, 0.8);
+}
+
+.order-glow-btn:active {
+  transform: translateY(0);
+}
+
+/* Hero SVG Logo Intro Animations: Triangle stroke draw + single eye blink */
+@keyframes logoStrokeDraw {
+  from {
+    stroke-dashoffset: 320;
+    opacity: 0.25;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes eyeBlinkOnce {
+  0%, 42% {
+    transform: scaleY(1);
+  }
+  52% {
+    transform: scaleY(0.08);
+  }
+  64%, 100% {
+    transform: scaleY(1);
+  }
+}
+
+.logo-triangle-stroke {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: logoStrokeDraw 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.logo-eye-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eyeBlinkOnce 1.4s ease-in-out 1s 1 forwards;
+}
+
+/* Scroll reveal fallback state (GSAP animates from/to cleanly) */
+.reveal-item {
+  will-change: transform, opacity;
+}
+
+/* Subtle horizontal auto-scrolling marquee for reviews */
+@keyframes reviewMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes reviewMarqueeRtl {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+.reviews-track {
+  display: flex;
+  width: max-content;
+  animation: reviewMarquee 42s linear infinite;
+}
+
+html[dir="rtl"] .reviews-track {
+  animation-name: reviewMarqueeRtl;
+}
+
+.reviews-track.is-paused,
+.reviews-carousel:hover .reviews-track,
+.reviews-carousel:focus-within .reviews-track {
+  animation-play-state: paused;
+}
+
+/* Custom cursor hiding default cursor on fine pointer desktop only when active */
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button {
+    cursor: none;
+  }
+}
+
+/* Reduced motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .logo-triangle-stroke {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .logo-eye-blink {
+    animation: none;
+  }
+  .reviews-track {
+    animation: none;
+  }
+}
