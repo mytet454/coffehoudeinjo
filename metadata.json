@@ -1,0 +1,8 @@
+{
+  "name": "SIDRA — Specialty Cold Brew Coffee",
+  "description": "Artisanal slow-steeped cold brew coffee showcase featuring interactive 3D Three.js visuals, falling roasted coffee beans, bilingual English/Arabic RTL support, and a bold 60/30/10 espresso and warm cream design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
